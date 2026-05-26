@@ -1,0 +1,694 @@
+{
+  "meta": {
+    "ocf_version": "1.0.0",
+    "units": "mm",
+    "created_at": "2026-05-26T09:00:00Z",
+    "application": {
+      "name": "OmniCut",
+      "version": "1.0.0"
+    },
+    "project": {
+      "name": "Mixed Bracket Nesting — Sheet 1",
+      "customer": "ACME Manufacturing",
+      "order_number": "PO-20260526-002"
+    }
+  },
+  "library": {
+    "materials": [
+      {
+        "id": "mat_s355_6",
+        "name": "S355 6 mm",
+        "type": "STEEL",
+        "density_kg_m3": 7850
+      }
+    ],
+    "parts": [
+      {
+        "id": "part_bracket_a",
+        "name": "L-Bracket 80×60",
+        "tags": [
+          "bracket"
+        ],
+        "geometry": {
+          "bounding_box": {
+            "min": [
+              0,
+              0
+            ],
+            "max": [
+              80,
+              60
+            ]
+          },
+          "contours": [
+            {
+              "id": "outer",
+              "role": "OUTER",
+              "winding": "CCW",
+              "segments": [
+                {
+                  "id": "s1",
+                  "type": "LINE",
+                  "start": [
+                    0,
+                    0
+                  ],
+                  "end": [
+                    80,
+                    0
+                  ]
+                },
+                {
+                  "id": "s2",
+                  "type": "LINE",
+                  "start": [
+                    80,
+                    0
+                  ],
+                  "end": [
+                    80,
+                    20
+                  ]
+                },
+                {
+                  "id": "s3",
+                  "type": "LINE",
+                  "start": [
+                    80,
+                    20
+                  ],
+                  "end": [
+                    20,
+                    20
+                  ]
+                },
+                {
+                  "id": "s4",
+                  "type": "LINE",
+                  "start": [
+                    20,
+                    20
+                  ],
+                  "end": [
+                    20,
+                    60
+                  ]
+                },
+                {
+                  "id": "s5",
+                  "type": "LINE",
+                  "start": [
+                    20,
+                    60
+                  ],
+                  "end": [
+                    0,
+                    60
+                  ]
+                },
+                {
+                  "id": "s6",
+                  "type": "LINE",
+                  "start": [
+                    0,
+                    60
+                  ],
+                  "end": [
+                    0,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "hole_1",
+              "role": "INNER",
+              "winding": "CW",
+              "tags": [
+                "bolt-hole"
+              ],
+              "segments": [
+                {
+                  "id": "sh1",
+                  "type": "CIRCLE",
+                  "center": [
+                    10,
+                    10
+                  ],
+                  "radius": 4.5
+                }
+              ]
+            },
+            {
+              "id": "hole_2",
+              "role": "INNER",
+              "winding": "CW",
+              "tags": [
+                "bolt-hole"
+              ],
+              "segments": [
+                {
+                  "id": "sh2",
+                  "type": "CIRCLE",
+                  "center": [
+                    10,
+                    50
+                  ],
+                  "radius": 4.5
+                }
+              ]
+            },
+            {
+              "id": "hole_3",
+              "role": "INNER",
+              "winding": "CW",
+              "tags": [
+                "bolt-hole"
+              ],
+              "segments": [
+                {
+                  "id": "sh3",
+                  "type": "CIRCLE",
+                  "center": [
+                    60,
+                    10
+                  ],
+                  "radius": 4.5
+                }
+              ]
+            }
+          ],
+          "source_format": "DXF"
+        },
+        "properties": {
+          "area_mm2": 3400,
+          "perimeter_mm": 340
+        },
+        "default_operations": [
+          {
+            "id": "op_cut",
+            "op_type": "LASER_CUT",
+            "target": {
+              "contour_role": "ALL"
+            },
+            "priority": 1,
+            "params": {
+              "speed_mm_min": 4500,
+              "power_pct": 75,
+              "gas": "N2",
+              "gas_pressure_bar": 10.0,
+              "pierce_mode": "STATIC",
+              "pierce_time_ms": 300,
+              "kerf_mm": 0.3,
+              "quality": "HIGH"
+            },
+            "toolpath_hints": {
+              "sequence": "INNER_FIRST",
+              "lead_in": {
+                "type": "ARC",
+                "radius_mm": 2.5
+              },
+              "lead_out": {
+                "type": "ARC",
+                "radius_mm": 2.0,
+                "overcut_mm": 0.3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "part_disc_100",
+        "name": "Disc Ø100 mm",
+        "tags": [
+          "round",
+          "disc"
+        ],
+        "geometry": {
+          "bounding_box": {
+            "min": [
+              0,
+              0
+            ],
+            "max": [
+              100,
+              100
+            ]
+          },
+          "contours": [
+            {
+              "id": "outer",
+              "role": "OUTER",
+              "winding": "CCW",
+              "segments": [
+                {
+                  "id": "s1",
+                  "type": "CIRCLE",
+                  "center": [
+                    50,
+                    50
+                  ],
+                  "radius": 50
+                }
+              ]
+            },
+            {
+              "id": "center_hole",
+              "role": "INNER",
+              "winding": "CW",
+              "tags": [
+                "center-hole"
+              ],
+              "segments": [
+                {
+                  "id": "sh1",
+                  "type": "CIRCLE",
+                  "center": [
+                    50,
+                    50
+                  ],
+                  "radius": 10
+                }
+              ]
+            }
+          ],
+          "source_format": "DXF"
+        },
+        "properties": {
+          "area_mm2": 7540,
+          "perimeter_mm": 377
+        },
+        "default_operations": [
+          {
+            "id": "op_cut",
+            "op_type": "LASER_CUT",
+            "target": {
+              "contour_role": "ALL"
+            },
+            "priority": 1,
+            "params": {
+              "speed_mm_min": 4000,
+              "power_pct": 78,
+              "gas": "N2",
+              "gas_pressure_bar": 10.0,
+              "pierce_mode": "STATIC",
+              "pierce_time_ms": 350,
+              "kerf_mm": 0.3,
+              "quality": "HIGH"
+            },
+            "toolpath_hints": {
+              "sequence": "INNER_FIRST",
+              "lead_in": {
+                "type": "ARC",
+                "radius_mm": 3.0
+              },
+              "lead_out": {
+                "type": "ARC",
+                "radius_mm": 3.0,
+                "overcut_mm": 0.5
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "part_rect_plate",
+        "name": "Mounting Plate 120×80",
+        "tags": [
+          "plate"
+        ],
+        "geometry": {
+          "bounding_box": {
+            "min": [
+              0,
+              0
+            ],
+            "max": [
+              120,
+              80
+            ]
+          },
+          "contours": [
+            {
+              "id": "outer",
+              "role": "OUTER",
+              "winding": "CCW",
+              "segments": [
+                {
+                  "id": "s1",
+                  "type": "LINE",
+                  "start": [
+                    0,
+                    0
+                  ],
+                  "end": [
+                    120,
+                    0
+                  ]
+                },
+                {
+                  "id": "s2",
+                  "type": "LINE",
+                  "start": [
+                    120,
+                    0
+                  ],
+                  "end": [
+                    120,
+                    80
+                  ]
+                },
+                {
+                  "id": "s3",
+                  "type": "LINE",
+                  "start": [
+                    120,
+                    80
+                  ],
+                  "end": [
+                    0,
+                    80
+                  ]
+                },
+                {
+                  "id": "s4",
+                  "type": "LINE",
+                  "start": [
+                    0,
+                    80
+                  ],
+                  "end": [
+                    0,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "slot_1",
+              "role": "INNER",
+              "winding": "CW",
+              "tags": [
+                "slot"
+              ],
+              "segments": [
+                {
+                  "id": "sl1",
+                  "type": "LINE",
+                  "start": [
+                    25,
+                    30
+                  ],
+                  "end": [
+                    95,
+                    30
+                  ]
+                },
+                {
+                  "id": "sl2",
+                  "type": "ARC",
+                  "start": [
+                    95,
+                    30
+                  ],
+                  "end": [
+                    95,
+                    50
+                  ],
+                  "center": [
+                    95,
+                    40
+                  ],
+                  "radius": 10,
+                  "clockwise": false
+                },
+                {
+                  "id": "sl3",
+                  "type": "LINE",
+                  "start": [
+                    95,
+                    50
+                  ],
+                  "end": [
+                    25,
+                    50
+                  ]
+                },
+                {
+                  "id": "sl4",
+                  "type": "ARC",
+                  "start": [
+                    25,
+                    50
+                  ],
+                  "end": [
+                    25,
+                    30
+                  ],
+                  "center": [
+                    25,
+                    40
+                  ],
+                  "radius": 10,
+                  "clockwise": false
+                }
+              ]
+            },
+            {
+              "id": "hole_tl",
+              "role": "INNER",
+              "winding": "CW",
+              "tags": [
+                "bolt-hole"
+              ],
+              "segments": [
+                {
+                  "id": "sh1",
+                  "type": "CIRCLE",
+                  "center": [
+                    10,
+                    70
+                  ],
+                  "radius": 4.5
+                }
+              ]
+            },
+            {
+              "id": "hole_tr",
+              "role": "INNER",
+              "winding": "CW",
+              "tags": [
+                "bolt-hole"
+              ],
+              "segments": [
+                {
+                  "id": "sh2",
+                  "type": "CIRCLE",
+                  "center": [
+                    110,
+                    70
+                  ],
+                  "radius": 4.5
+                }
+              ]
+            },
+            {
+              "id": "hole_bl",
+              "role": "INNER",
+              "winding": "CW",
+              "tags": [
+                "bolt-hole"
+              ],
+              "segments": [
+                {
+                  "id": "sh3",
+                  "type": "CIRCLE",
+                  "center": [
+                    10,
+                    10
+                  ],
+                  "radius": 4.5
+                }
+              ]
+            },
+            {
+              "id": "hole_br",
+              "role": "INNER",
+              "winding": "CW",
+              "tags": [
+                "bolt-hole"
+              ],
+              "segments": [
+                {
+                  "id": "sh4",
+                  "type": "CIRCLE",
+                  "center": [
+                    110,
+                    10
+                  ],
+                  "radius": 4.5
+                }
+              ]
+            }
+          ],
+          "source_format": "DXF"
+        },
+        "properties": {
+          "area_mm2": 8740,
+          "perimeter_mm": 496
+        },
+        "default_operations": [
+          {
+            "id": "op_cut",
+            "op_type": "LASER_CUT",
+            "target": {
+              "contour_role": "ALL"
+            },
+            "priority": 1,
+            "params": {
+              "speed_mm_min": 3800,
+              "power_pct": 80,
+              "gas": "N2",
+              "gas_pressure_bar": 10.0,
+              "pierce_mode": "STATIC",
+              "pierce_time_ms": 350,
+              "kerf_mm": 0.3,
+              "quality": "HIGH"
+            },
+            "toolpath_hints": {
+              "sequence": "INNER_FIRST",
+              "lead_in": {
+                "type": "ARC",
+                "radius_mm": 3.0
+              },
+              "lead_out": {
+                "type": "ARC",
+                "radius_mm": 2.5,
+                "overcut_mm": 0.4
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "workspaces": [
+    {
+      "id": "ws_sheet1",
+      "name": "3000×1500 S355 6 mm — Sheet 1",
+      "sheet": {
+        "material_ref": "mat_s355_6",
+        "thickness_mm": 6.0,
+        "width_mm": 3000,
+        "height_mm": 1500,
+        "is_remnant": false,
+        "stock_id": "STK-S355-6-3000x1500-001"
+      },
+      "machine": {
+        "id": "laser_5kw_01",
+        "name": "Fiber Laser 5 kW",
+        "type": "LASER",
+        "manufacturer": "Generic",
+        "post_processor": "generic_laser_v1",
+        "capabilities": [
+          "LASER_CUT",
+          "MARKING"
+        ],
+        "bed_width_mm": 3000,
+        "bed_height_mm": 1500
+      },
+      "nesting_params": {
+        "part_spacing_mm": 5.0,
+        "sheet_edge_clearance_mm": 10.0,
+        "rotation_step_deg": 90,
+        "allow_mirror": false,
+        "allow_common_lines": false,
+        "sequence_strategy": "INSIDE_OUT",
+        "optimization_target": "MATERIAL_UTILIZATION"
+      },
+      "instances": [
+        {
+          "instance_id": "inst_brk_1",
+          "part_ref": "part_bracket_a",
+          "transform": {
+            "x": 10,
+            "y": 10,
+            "rotation_deg": 0
+          }
+        },
+        {
+          "instance_id": "inst_brk_2",
+          "part_ref": "part_bracket_a",
+          "transform": {
+            "x": 100,
+            "y": 10,
+            "rotation_deg": 0
+          }
+        },
+        {
+          "instance_id": "inst_brk_3",
+          "part_ref": "part_bracket_a",
+          "transform": {
+            "x": 190,
+            "y": 10,
+            "rotation_deg": 0
+          }
+        },
+        {
+          "instance_id": "inst_disc_1",
+          "part_ref": "part_disc_100",
+          "transform": {
+            "x": 280,
+            "y": 10,
+            "rotation_deg": 0
+          }
+        },
+        {
+          "instance_id": "inst_disc_2",
+          "part_ref": "part_disc_100",
+          "transform": {
+            "x": 390,
+            "y": 10,
+            "rotation_deg": 0
+          }
+        },
+        {
+          "instance_id": "inst_plate_1",
+          "part_ref": "part_rect_plate",
+          "transform": {
+            "x": 500,
+            "y": 10,
+            "rotation_deg": 0
+          }
+        },
+        {
+          "instance_id": "inst_plate_2",
+          "part_ref": "part_rect_plate",
+          "transform": {
+            "x": 630,
+            "y": 10,
+            "rotation_deg": 0
+          }
+        },
+        {
+          "instance_id": "inst_plate_3",
+          "part_ref": "part_rect_plate",
+          "transform": {
+            "x": 760,
+            "y": 10,
+            "rotation_deg": 90
+          }
+        }
+      ],
+      "operations": [],
+      "statistics": {
+        "utilization_pct": 8.2,
+        "total_cut_length_mm": 4250.0,
+        "estimated_time_s": 320,
+        "part_count": 8,
+        "pierce_count": 28,
+        "computed_at": "2026-05-26T09:05:00Z"
+      }
+    }
+  ]
+}

@@ -1,0 +1,603 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://opencut.io/schema/1.0.0/schema.json",
+  "title": "OCF — Open Cut Format",
+  "description": "Schema for Open Cut Format v1.0.0 — CAD/CAM flat-sheet cutting projects",
+  "type": "object",
+  "required": ["meta", "library", "workspaces"],
+  "additionalProperties": true,
+
+  "definitions": {
+
+    "point2d": {
+      "type": "array",
+      "items": { "type": "number" },
+      "minItems": 2,
+      "maxItems": 2,
+      "description": "2D coordinate [x, y] in millimetres"
+    },
+
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+
+    "lead_in_out": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["ARC", "LINE", "TANGENT", "NONE"]
+        },
+        "length_mm": { "type": "number", "minimum": 0 },
+        "radius_mm": { "type": "number", "minimum": 0 },
+        "angle_deg": { "type": "number" },
+        "overcut_mm": { "type": "number", "minimum": 0 }
+      },
+      "required": ["type"],
+      "additionalProperties": true
+    },
+
+    "segment": {
+      "type": "object",
+      "required": ["id", "type"],
+      "properties": {
+        "id": { "$ref": "#/definitions/non_empty_string" },
+        "type": {
+          "type": "string",
+          "enum": ["LINE", "ARC", "CIRCLE", "SPLINE", "POLYLINE"]
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "type": { "const": "LINE" } } },
+          "then": {
+            "required": ["start", "end"],
+            "properties": {
+              "start": { "$ref": "#/definitions/point2d" },
+              "end": { "$ref": "#/definitions/point2d" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "ARC" } } },
+          "then": {
+            "required": ["start", "end", "center", "radius", "clockwise"],
+            "properties": {
+              "start": { "$ref": "#/definitions/point2d" },
+              "end": { "$ref": "#/definitions/point2d" },
+              "center": { "$ref": "#/definitions/point2d" },
+              "radius": { "type": "number", "exclusiveMinimum": 0 },
+              "clockwise": { "type": "boolean" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "CIRCLE" } } },
+          "then": {
+            "required": ["center", "radius"],
+            "properties": {
+              "center": { "$ref": "#/definitions/point2d" },
+              "radius": { "type": "number", "exclusiveMinimum": 0 }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "SPLINE" } } },
+          "then": {
+            "required": ["start", "end", "control_points", "degree"],
+            "properties": {
+              "start": { "$ref": "#/definitions/point2d" },
+              "end": { "$ref": "#/definitions/point2d" },
+              "control_points": {
+                "type": "array",
+                "items": { "$ref": "#/definitions/point2d" },
+                "minItems": 3
+              },
+              "degree": { "type": "integer", "enum": [2, 3] },
+              "knots": {
+                "type": "array",
+                "items": { "type": "number" }
+              },
+              "weights": {
+                "type": "array",
+                "items": { "type": "number" }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "POLYLINE" } } },
+          "then": {
+            "required": ["points"],
+            "properties": {
+              "points": {
+                "type": "array",
+                "items": { "$ref": "#/definitions/point2d" },
+                "minItems": 2
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": true
+    },
+
+    "contour": {
+      "type": "object",
+      "required": ["id", "role", "segments"],
+      "properties": {
+        "id": { "$ref": "#/definitions/non_empty_string" },
+        "role": {
+          "type": "string",
+          "enum": ["OUTER", "INNER", "OPEN"]
+        },
+        "winding": {
+          "type": "string",
+          "enum": ["CW", "CCW"]
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "segments": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/segment" },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": true
+    },
+
+    "operation_target": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "oneOf": [
+            { "type": "string", "enum": ["ALL"] },
+            {
+              "type": "array",
+              "items": { "type": "string" },
+              "minItems": 1
+            }
+          ]
+        },
+        "contour_role": {
+          "type": "string",
+          "enum": ["OUTER", "INNER", "OPEN", "ALL"]
+        },
+        "contour_ids": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "contour_tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": true
+    },
+
+    "operation": {
+      "type": "object",
+      "required": ["op_type", "params"],
+      "properties": {
+        "id": { "type": "string" },
+        "op_type": {
+          "type": "string",
+          "description": "Operation type identifier. Standard values listed in operations.md. Custom values must be prefixed with a vendor namespace (e.g. VENDOR_OPNAME).",
+          "examples": [
+            "LASER_CUT", "PLASMA_CUT", "OXYFUEL_CUT", "WATERJET_CUT",
+            "BEVEL_CUT", "MARKING", "ENGRAVING", "ETCHING",
+            "DRILLING", "COUNTERSINK", "TAPPING",
+            "MILLING_CONTOUR", "MILLING_POCKET",
+            "PUNCH_TOOL", "NIBBLING", "FORMING",
+            "FILM_REMOVAL"
+          ]
+        },
+        "target": { "$ref": "#/definitions/operation_target" },
+        "params": {
+          "type": "object",
+          "description": "Operation-specific parameters. Structure depends on op_type."
+        },
+        "toolpath_hints": {
+          "type": "object",
+          "properties": {
+            "approach": {
+              "type": "string",
+              "enum": ["OUTSIDE", "INSIDE", "TANGENT"]
+            },
+            "sequence": {
+              "type": "string",
+              "enum": ["INNER_FIRST", "OUTER_FIRST", "CUSTOM"]
+            },
+            "lead_in":  { "$ref": "#/definitions/lead_in_out" },
+            "lead_out": { "$ref": "#/definitions/lead_in_out" },
+            "cut_direction": {
+              "type": "string",
+              "enum": ["CLIMB", "CONVENTIONAL"]
+            },
+            "start_position": {
+              "type": "string",
+              "enum": ["AUTO", "NEAREST", "BOTTOM_LEFT"]
+            },
+            "bridge_kerf": { "type": "boolean" },
+            "bridge_width_mm": { "type": "number", "minimum": 0 }
+          },
+          "additionalProperties": true
+        },
+        "priority": { "type": "integer" },
+        "enabled": { "type": "boolean" },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+
+    "transform": {
+      "type": "object",
+      "required": ["x", "y"],
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "rotation_deg": { "type": "number" },
+        "mirror_x": { "type": "boolean" },
+        "mirror_y": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    }
+
+  },
+
+  "properties": {
+
+    "meta": {
+      "type": "object",
+      "required": ["ocf_version"],
+      "properties": {
+        "ocf_version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$",
+          "description": "Semantic version of the OCF schema used"
+        },
+        "schema_url": { "type": "string", "format": "uri" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "modified_at": { "type": "string", "format": "date-time" },
+        "units": {
+          "type": "string",
+          "enum": ["mm", "inch"],
+          "description": "UI display preference and postprocessor hint. 'mm' = display in millimetres and emit G21; 'inch' = display in inches and emit G20. Storage in OCF is ALWAYS in millimetres regardless of this field."
+        },
+        "application": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "version": { "type": "string" }
+          },
+          "additionalProperties": true
+        },
+        "author": { "type": "string" },
+        "description": { "type": "string" },
+        "project": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "customer": { "type": "string" },
+            "order_number": { "type": "string" },
+            "part_number": { "type": "string" },
+            "revision": { "type": "string" },
+            "notes": { "type": "string" }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+
+    "library": {
+      "type": "object",
+      "required": ["parts"],
+      "properties": {
+
+        "materials": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "type"],
+            "properties": {
+              "id": { "$ref": "#/definitions/non_empty_string" },
+              "name": { "type": "string" },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "STEEL", "STAINLESS_STEEL", "ALUMINUM", "COPPER", "BRASS",
+                  "TITANIUM", "NICKEL_ALLOY", "PLASTIC", "FOAM", "WOOD",
+                  "STONE", "COMPOSITE", "OTHER"
+                ]
+              },
+              "density_kg_m3": { "type": "number", "minimum": 0 },
+              "hardness_hv": { "type": "number", "minimum": 0 },
+              "yield_strength_mpa": { "type": "number", "minimum": 0 },
+              "notes": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        },
+
+        "parts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "geometry"],
+            "properties": {
+              "id": { "$ref": "#/definitions/non_empty_string" },
+              "name": { "type": "string" },
+              "description": { "type": "string" },
+              "tags": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "compatible_thickness_min_mm": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Minimum sheet thickness this part is designed for (mm)"
+              },
+              "compatible_thickness_max_mm": {
+                "type": "number",
+                "exclusiveMinimum": 0,
+                "description": "Maximum sheet thickness this part is designed for (mm)"
+              },
+              "geometry": {
+                "type": "object",
+                "required": ["contours"],
+                "properties": {
+                  "bounding_box": {
+                    "type": "object",
+                    "properties": {
+                      "min": { "$ref": "#/definitions/point2d" },
+                      "max": { "$ref": "#/definitions/point2d" }
+                    }
+                  },
+                  "contours": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/contour" },
+                    "minItems": 1
+                  },
+                  "source_format": {
+                    "type": "string",
+                    "enum": ["DXF", "SVG", "STEP", "IGES", "OCF", "OTHER"]
+                  },
+                  "source_data": {
+                    "type": "string",
+                    "description": "Base64-encoded original source file"
+                  }
+                },
+                "additionalProperties": true
+              },
+              "properties": {
+                "type": "object",
+                "properties": {
+                  "area_mm2": { "type": "number", "minimum": 0 },
+                  "perimeter_mm": { "type": "number", "minimum": 0 },
+                  "width_mm": { "type": "number", "minimum": 0 },
+                  "height_mm": { "type": "number", "minimum": 0 }
+                },
+                "additionalProperties": true
+              },
+              "default_operations": {
+                "type": "array",
+                "items": { "$ref": "#/definitions/operation" }
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+
+      },
+      "additionalProperties": true
+    },
+
+    "workspaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "sheet", "instances"],
+        "properties": {
+
+          "id": { "$ref": "#/definitions/non_empty_string" },
+          "name": { "type": "string" },
+
+          "sheet": {
+            "type": "object",
+            "required": ["thickness_mm", "width_mm", "height_mm"],
+            "properties": {
+              "material_ref": { "type": "string" },
+              "material_inline": {
+                "type": "object",
+                "required": ["name", "type"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "type": { "type": "string" },
+                  "density_kg_m3": { "type": "number" }
+                },
+                "additionalProperties": true
+              },
+              "thickness_mm": { "type": "number", "exclusiveMinimum": 0 },
+              "width_mm": { "type": "number", "exclusiveMinimum": 0 },
+              "height_mm": { "type": "number", "exclusiveMinimum": 0 },
+              "grain_direction_deg": { "type": "number" },
+              "is_remnant": { "type": "boolean" },
+              "stock_id": { "type": "string" },
+              "surface_finish": {
+                "type": "string",
+                "enum": ["MILL", "PICKLED", "GALVANIZED", "PAINTED", "OTHER"]
+              }
+            },
+            "additionalProperties": true
+          },
+
+          "machine": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "type": {
+                "description": "Machine process category. Use a string for single-process machines, an array for combo machines.",
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "enum": ["LASER", "PLASMA", "WATERJET", "OXYFUEL", "MILLING", "PUNCHING", "OTHER"]
+                  },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": ["LASER", "PLASMA", "WATERJET", "OXYFUEL", "MILLING", "PUNCHING", "OTHER"]
+                    },
+                    "minItems": 2,
+                    "uniqueItems": true
+                  }
+                ]
+              },
+              "manufacturer": { "type": "string" },
+              "model": { "type": "string" },
+              "post_processor": { "type": "string" },
+              "capabilities": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "bed_width_mm": { "type": "number" },
+              "bed_height_mm": { "type": "number" }
+            },
+            "additionalProperties": true
+          },
+
+          "nesting_params": {
+            "type": "object",
+            "properties": {
+              "part_spacing_mm": { "type": "number", "minimum": 0 },
+              "sheet_edge_clearance_mm": { "type": "number", "minimum": 0 },
+              "rotation_step_deg": { "type": "number", "minimum": 0, "maximum": 360 },
+              "allow_mirror": { "type": "boolean" },
+              "allow_common_lines": { "type": "boolean" },
+              "sequence_strategy": {
+                "type": "string",
+                "enum": ["INSIDE_OUT", "OUTSIDE_IN", "LEFT_TO_RIGHT", "NEAREST_NEIGHBOUR", "CUSTOM"]
+              },
+              "optimization_target": {
+                "type": "string",
+                "enum": ["MATERIAL_UTILIZATION", "CUT_TIME", "TRAVEL_DISTANCE"]
+              },
+              "max_computation_s": { "type": "number", "minimum": 0 }
+            },
+            "additionalProperties": true
+          },
+
+          "instances": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["instance_id", "part_ref", "transform"],
+              "properties": {
+                "instance_id": { "$ref": "#/definitions/non_empty_string" },
+                "part_ref": { "$ref": "#/definitions/non_empty_string" },
+                "transform": { "$ref": "#/definitions/transform" },
+                "locked": { "type": "boolean" },
+                "priority": { "type": "integer" },
+                "label": { "type": "string" },
+                "override_operations": {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/operation" }
+                },
+                "extend_operations": {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/operation" }
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+
+          "operations": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/operation" }
+          },
+
+          "constraints": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["type"],
+              "properties": {
+                "id": { "type": "string" },
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "COMMON_LINE_CUTTING",
+                    "FIXED_POSITION",
+                    "RELATIVE_POSITION",
+                    "MIN_DISTANCE",
+                    "SAME_ROTATION"
+                  ]
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+
+          "toolpaths": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id"],
+              "properties": {
+                "id": { "type": "string" },
+                "operation_ref": { "type": "string" },
+                "instance_ref": { "type": "string" },
+                "contour_ref": { "type": "string" },
+                "segments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["type"],
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": ["RAPID", "PIERCE", "LEAD_IN", "CUT", "LEAD_OUT", "DWELL"]
+                      },
+                      "start": { "$ref": "#/definitions/point2d" },
+                      "end": { "$ref": "#/definitions/point2d" },
+                      "arc_center": { "$ref": "#/definitions/point2d" },
+                      "clockwise": { "type": "boolean" },
+                      "z": { "type": "number" },
+                      "duration_ms": { "type": "number", "minimum": 0 },
+                      "position": { "$ref": "#/definitions/point2d" }
+                    },
+                    "additionalProperties": true
+                  }
+                }
+              },
+              "additionalProperties": true
+            }
+          },
+
+          "statistics": {
+            "type": "object",
+            "properties": {
+              "utilization_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+              "total_cut_length_mm": { "type": "number", "minimum": 0 },
+              "total_rapid_length_mm": { "type": "number", "minimum": 0 },
+              "estimated_time_s": { "type": "number", "minimum": 0 },
+              "part_count": { "type": "integer", "minimum": 0 },
+              "pierce_count": { "type": "integer", "minimum": 0 },
+              "computed_at": { "type": "string", "format": "date-time" }
+            },
+            "additionalProperties": true
+          }
+
+        },
+        "additionalProperties": true
+      }
+    }
+
+  }
+}

@@ -1,0 +1,217 @@
+{
+  "meta": {
+    "ocf_version": "1.0.0",
+    "units": "mm",
+    "created_at": "2026-05-26T08:30:00Z",
+    "application": {
+      "name": "OmniCut",
+      "version": "1.0.0"
+    },
+    "author": "Jan Kowalski",
+    "project": {
+      "name": "Flange Plate",
+      "order_number": "PO-20260526-001",
+      "part_number": "FLG-001",
+      "revision": "A"
+    }
+  },
+
+  "library": {
+    "materials": [
+      {
+        "id": "mat_s355_6",
+        "name": "S355 Structural Steel 6 mm",
+        "type": "STEEL",
+        "density_kg_m3": 7850,
+        "yield_strength_mpa": 355
+      }
+    ],
+    "parts": [
+      {
+        "id": "part_flange_001",
+        "name": "Flange Plate 200×150",
+        "description": "Rectangular flange plate with 4 bolt holes and 1 central hole",
+        "tags": ["flange", "structural"],
+        "compatible_thickness_min_mm": 4.0,
+        "compatible_thickness_max_mm": 10.0,
+        "geometry": {
+          "bounding_box": {
+            "min": [0, 0],
+            "max": [200, 150]
+          },
+          "contours": [
+            {
+              "id": "contour_outer",
+              "role": "OUTER",
+              "winding": "CCW",
+              "segments": [
+                { "id": "seg_bot",   "type": "LINE", "start": [10, 0],   "end": [190, 0] },
+                { "id": "seg_br",    "type": "ARC",  "start": [190, 0],  "end": [200, 10], "center": [190, 10], "radius": 10, "clockwise": false },
+                { "id": "seg_right", "type": "LINE", "start": [200, 10], "end": [200, 140] },
+                { "id": "seg_tr",    "type": "ARC",  "start": [200, 140],"end": [190, 150],"center": [190, 140],"radius": 10, "clockwise": false },
+                { "id": "seg_top",   "type": "LINE", "start": [190, 150],"end": [10, 150] },
+                { "id": "seg_tl",    "type": "ARC",  "start": [10, 150], "end": [0, 140],  "center": [10, 140], "radius": 10, "clockwise": false },
+                { "id": "seg_left",  "type": "LINE", "start": [0, 140],  "end": [0, 10] },
+                { "id": "seg_bl",    "type": "ARC",  "start": [0, 10],   "end": [10, 0],   "center": [10, 10],  "radius": 10, "clockwise": false }
+              ]
+            },
+            {
+              "id": "contour_hole_center",
+              "role": "INNER",
+              "winding": "CW",
+              "tags": ["central-hole"],
+              "segments": [
+                { "id": "seg_hole_c", "type": "CIRCLE", "center": [100, 75], "radius": 20 }
+              ]
+            },
+            {
+              "id": "contour_hole_bl",
+              "role": "INNER",
+              "winding": "CW",
+              "tags": ["bolt-hole"],
+              "segments": [
+                { "id": "seg_hole_bl", "type": "CIRCLE", "center": [30, 30], "radius": 6.5 }
+              ]
+            },
+            {
+              "id": "contour_hole_br",
+              "role": "INNER",
+              "winding": "CW",
+              "tags": ["bolt-hole"],
+              "segments": [
+                { "id": "seg_hole_br", "type": "CIRCLE", "center": [170, 30], "radius": 6.5 }
+              ]
+            },
+            {
+              "id": "contour_hole_tr",
+              "role": "INNER",
+              "winding": "CW",
+              "tags": ["bolt-hole"],
+              "segments": [
+                { "id": "seg_hole_tr", "type": "CIRCLE", "center": [170, 120], "radius": 6.5 }
+              ]
+            },
+            {
+              "id": "contour_hole_tl",
+              "role": "INNER",
+              "winding": "CW",
+              "tags": ["bolt-hole"],
+              "segments": [
+                { "id": "seg_hole_tl", "type": "CIRCLE", "center": [30, 120], "radius": 6.5 }
+              ]
+            }
+          ],
+          "source_format": "DXF"
+        },
+        "properties": {
+          "area_mm2": 28464.0,
+          "perimeter_mm": 870.4,
+          "width_mm": 200,
+          "height_mm": 150
+        },
+        "default_operations": [
+          {
+            "id": "defop_cut_outer",
+            "op_type": "LASER_CUT",
+            "target": { "contour_role": "OUTER" },
+            "priority": 10,
+            "params": {
+              "speed_mm_min": 2800,
+              "power_pct": 90,
+              "gas": "N2",
+              "gas_pressure_bar": 12.0,
+              "focus_offset_mm": -0.5,
+              "cutting_height_mm": 0.5,
+              "pierce_mode": "STATIC",
+              "pierce_time_ms": 600,
+              "pierce_power_pct": 35,
+              "kerf_mm": 0.35,
+              "quality": "HIGH"
+            },
+            "toolpath_hints": {
+              "sequence": "INNER_FIRST",
+              "approach": "OUTSIDE",
+              "lead_in":  { "type": "ARC", "radius_mm": 4.0 },
+              "lead_out": { "type": "ARC", "radius_mm": 3.0, "overcut_mm": 0.5 }
+            }
+          },
+          {
+            "id": "defop_cut_inner",
+            "op_type": "LASER_CUT",
+            "target": { "contour_role": "INNER" },
+            "priority": 1,
+            "params": {
+              "speed_mm_min": 3200,
+              "power_pct": 85,
+              "gas": "N2",
+              "gas_pressure_bar": 12.0,
+              "focus_offset_mm": -0.5,
+              "cutting_height_mm": 0.5,
+              "pierce_mode": "STATIC",
+              "pierce_time_ms": 400,
+              "pierce_power_pct": 30,
+              "kerf_mm": 0.35,
+              "quality": "HIGH"
+            },
+            "toolpath_hints": {
+              "lead_in":  { "type": "LINE", "length_mm": 3.0 },
+              "lead_out": { "type": "LINE", "length_mm": 2.0, "overcut_mm": 0.3 }
+            }
+          }
+        ]
+      }
+    ]
+  },
+
+  "workspaces": [
+    {
+      "id": "ws_001",
+      "name": "S355 6mm — 1 flange",
+      "sheet": {
+        "material_ref": "mat_s355_6",
+        "thickness_mm": 6.0,
+        "width_mm": 500,
+        "height_mm": 300,
+        "is_remnant": false,
+        "stock_id": "STK-S355-6-001"
+      },
+      "machine": {
+        "id": "machine_fiber_3kw",
+        "name": "Fiber Laser 3 kW",
+        "type": "LASER",
+        "post_processor": "generic_laser_v1",
+        "capabilities": ["LASER_CUT", "MARKING"]
+      },
+      "nesting_params": {
+        "part_spacing_mm": 8.0,
+        "sheet_edge_clearance_mm": 10.0,
+        "rotation_step_deg": 90,
+        "allow_mirror": false,
+        "sequence_strategy": "INSIDE_OUT"
+      },
+      "instances": [
+        {
+          "instance_id": "inst_001",
+          "part_ref": "part_flange_001",
+          "transform": {
+            "x": 10.0,
+            "y": 10.0,
+            "rotation_deg": 0.0,
+            "mirror_x": false,
+            "mirror_y": false
+          },
+          "locked": false
+        }
+      ],
+      "operations": [],
+      "statistics": {
+        "utilization_pct": 28.5,
+        "total_cut_length_mm": 870.4,
+        "estimated_time_s": 45,
+        "part_count": 1,
+        "pierce_count": 6,
+        "computed_at": "2026-05-26T08:35:00Z"
+      }
+    }
+  ]
+}

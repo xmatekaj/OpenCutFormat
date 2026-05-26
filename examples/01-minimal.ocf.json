@@ -1,0 +1,11 @@
+{
+  "meta": {
+    "ocf_version": "1.0.0",
+    "units": "mm",
+    "created_at": "2026-05-26T08:00:00Z"
+  },
+  "library": {
+    "parts": []
+  },
+  "workspaces": []
+}

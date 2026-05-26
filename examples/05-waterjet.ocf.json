@@ -1,0 +1,417 @@
+{
+  "meta": {
+    "ocf_version": "1.0.0",
+    "units": "mm",
+    "created_at": "2026-05-26T11:00:00Z",
+    "application": {
+      "name": "OmniCut",
+      "version": "1.0.0"
+    },
+    "project": {
+      "name": "Granite Tile Cutting — Waterjet",
+      "customer": "Stone Design Studio",
+      "notes": "Intricate shapes cut from 20mm granite slabs using abrasive waterjet. Quality 4 for fine edges."
+    }
+  },
+  "library": {
+    "materials": [
+      {
+        "id": "mat_granite_20",
+        "name": "Black Granite 20 mm",
+        "type": "STONE",
+        "density_kg_m3": 2700
+      }
+    ],
+    "parts": [
+      {
+        "id": "part_hex_tile",
+        "name": "Hexagonal Tile 120mm flat-to-flat",
+        "tags": [
+          "tile",
+          "hex",
+          "stone"
+        ],
+        "geometry": {
+          "bounding_box": {
+            "min": [
+              0,
+              0
+            ],
+            "max": [
+              138.56,
+              120
+            ]
+          },
+          "contours": [
+            {
+              "id": "outer",
+              "role": "OUTER",
+              "winding": "CCW",
+              "segments": [
+                {
+                  "id": "s1",
+                  "type": "LINE",
+                  "start": [
+                    34.64,
+                    0
+                  ],
+                  "end": [
+                    103.92,
+                    0
+                  ]
+                },
+                {
+                  "id": "s2",
+                  "type": "LINE",
+                  "start": [
+                    103.92,
+                    0
+                  ],
+                  "end": [
+                    138.56,
+                    60
+                  ]
+                },
+                {
+                  "id": "s3",
+                  "type": "LINE",
+                  "start": [
+                    138.56,
+                    60
+                  ],
+                  "end": [
+                    103.92,
+                    120
+                  ]
+                },
+                {
+                  "id": "s4",
+                  "type": "LINE",
+                  "start": [
+                    103.92,
+                    120
+                  ],
+                  "end": [
+                    34.64,
+                    120
+                  ]
+                },
+                {
+                  "id": "s5",
+                  "type": "LINE",
+                  "start": [
+                    34.64,
+                    120
+                  ],
+                  "end": [
+                    0,
+                    60
+                  ]
+                },
+                {
+                  "id": "s6",
+                  "type": "LINE",
+                  "start": [
+                    0,
+                    60
+                  ],
+                  "end": [
+                    34.64,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "source_format": "DXF"
+        },
+        "properties": {
+          "area_mm2": 12470.0,
+          "perimeter_mm": 360.0,
+          "width_mm": 138.56,
+          "height_mm": 120
+        },
+        "default_operations": [
+          {
+            "id": "op_wj_cut",
+            "op_type": "WATERJET_CUT",
+            "target": {
+              "contour_role": "OUTER"
+            },
+            "priority": 1,
+            "params": {
+              "speed_mm_min": 150,
+              "pressure_bar": 3800,
+              "abrasive_type": "GARNET_80",
+              "abrasive_flow_g_min": 400,
+              "quality": 4,
+              "pierce_mode": "STATIC",
+              "pierce_dwell_ms": 2000,
+              "standoff_mm": 3.0,
+              "kerf_mm": 1.2,
+              "taper_compensation": true
+            },
+            "toolpath_hints": {
+              "lead_in": {
+                "type": "LINE",
+                "length_mm": 8.0,
+                "angle_deg": 30
+              },
+              "lead_out": {
+                "type": "LINE",
+                "length_mm": 5.0
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "part_wave_tile",
+        "name": "Wave-Edge Tile 200×150",
+        "tags": [
+          "tile",
+          "wave",
+          "stone"
+        ],
+        "geometry": {
+          "bounding_box": {
+            "min": [
+              0,
+              0
+            ],
+            "max": [
+              200,
+              150
+            ]
+          },
+          "contours": [
+            {
+              "id": "outer",
+              "role": "OUTER",
+              "winding": "CCW",
+              "segments": [
+                {
+                  "id": "s1",
+                  "type": "LINE",
+                  "start": [
+                    0,
+                    0
+                  ],
+                  "end": [
+                    200,
+                    0
+                  ]
+                },
+                {
+                  "id": "s2",
+                  "type": "LINE",
+                  "start": [
+                    200,
+                    0
+                  ],
+                  "end": [
+                    200,
+                    150
+                  ]
+                },
+                {
+                  "id": "s3",
+                  "type": "SPLINE",
+                  "start": [
+                    200,
+                    150
+                  ],
+                  "end": [
+                    0,
+                    150
+                  ],
+                  "control_points": [
+                    [
+                      200,
+                      150
+                    ],
+                    [
+                      175,
+                      130
+                    ],
+                    [
+                      150,
+                      170
+                    ],
+                    [
+                      125,
+                      150
+                    ],
+                    [
+                      100,
+                      130
+                    ],
+                    [
+                      75,
+                      170
+                    ],
+                    [
+                      50,
+                      150
+                    ],
+                    [
+                      25,
+                      130
+                    ],
+                    [
+                      0,
+                      150
+                    ]
+                  ],
+                  "degree": 3
+                },
+                {
+                  "id": "s4",
+                  "type": "LINE",
+                  "start": [
+                    0,
+                    150
+                  ],
+                  "end": [
+                    0,
+                    0
+                  ]
+                }
+              ]
+            }
+          ],
+          "source_format": "DXF"
+        },
+        "properties": {
+          "area_mm2": 30000.0,
+          "perimeter_mm": 720.0,
+          "width_mm": 200,
+          "height_mm": 150
+        },
+        "default_operations": [
+          {
+            "id": "op_wj_cut",
+            "op_type": "WATERJET_CUT",
+            "target": {
+              "contour_role": "OUTER"
+            },
+            "priority": 1,
+            "params": {
+              "speed_mm_min": 100,
+              "pressure_bar": 3800,
+              "abrasive_type": "GARNET_80",
+              "abrasive_flow_g_min": 400,
+              "quality": 4,
+              "pierce_mode": "DYNAMIC",
+              "pierce_dwell_ms": 1500,
+              "standoff_mm": 3.0,
+              "kerf_mm": 1.2,
+              "taper_compensation": true
+            },
+            "notes": "Spline curves: reduce speed to 80 mm/min on curved segments for quality 4.",
+            "toolpath_hints": {
+              "lead_in": {
+                "type": "LINE",
+                "length_mm": 10.0,
+                "angle_deg": 45
+              },
+              "lead_out": {
+                "type": "LINE",
+                "length_mm": 8.0
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "workspaces": [
+    {
+      "id": "ws_granite_sheet1",
+      "name": "Granite 20mm — 600×400 slab",
+      "sheet": {
+        "material_ref": "mat_granite_20",
+        "thickness_mm": 20.0,
+        "width_mm": 600,
+        "height_mm": 400,
+        "is_remnant": false,
+        "stock_id": "GRANITE-20-600x400-A"
+      },
+      "machine": {
+        "id": "waterjet_01",
+        "name": "Abrasive Waterjet 60kpsi",
+        "type": "WATERJET",
+        "post_processor": "generic_waterjet_v1",
+        "capabilities": [
+          "WATERJET_CUT"
+        ],
+        "bed_width_mm": 3000,
+        "bed_height_mm": 1500
+      },
+      "nesting_params": {
+        "part_spacing_mm": 8.0,
+        "sheet_edge_clearance_mm": 15.0,
+        "rotation_step_deg": 0,
+        "allow_mirror": false,
+        "sequence_strategy": "LEFT_TO_RIGHT",
+        "optimization_target": "MATERIAL_UTILIZATION"
+      },
+      "instances": [
+        {
+          "instance_id": "inst_hex_1",
+          "part_ref": "part_hex_tile",
+          "transform": {
+            "x": 15,
+            "y": 15,
+            "rotation_deg": 0
+          }
+        },
+        {
+          "instance_id": "inst_hex_2",
+          "part_ref": "part_hex_tile",
+          "transform": {
+            "x": 163,
+            "y": 15,
+            "rotation_deg": 0
+          }
+        },
+        {
+          "instance_id": "inst_hex_3",
+          "part_ref": "part_hex_tile",
+          "transform": {
+            "x": 89,
+            "y": 135,
+            "rotation_deg": 0
+          }
+        },
+        {
+          "instance_id": "inst_wave_1",
+          "part_ref": "part_wave_tile",
+          "transform": {
+            "x": 320,
+            "y": 15,
+            "rotation_deg": 0
+          }
+        },
+        {
+          "instance_id": "inst_wave_2",
+          "part_ref": "part_wave_tile",
+          "transform": {
+            "x": 320,
+            "y": 175,
+            "rotation_deg": 0
+          }
+        }
+      ],
+      "operations": [],
+      "statistics": {
+        "utilization_pct": 62.0,
+        "total_cut_length_mm": 2520.0,
+        "estimated_time_s": 3600,
+        "part_count": 5,
+        "pierce_count": 5,
+        "computed_at": "2026-05-26T11:15:00Z"
+      }
+    }
+  ]
+}

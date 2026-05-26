@@ -131,15 +131,15 @@ A circular arc defined by start, end, and centre points. The arc travels from `s
 }
 ```
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `id` | string | YES | Unique within the part |
-| `type` | string | YES | `"ARC"` |
-| `start` | [x, y] | YES | Arc start point (mm) |
-| `end` | [x, y] | YES | Arc end point (mm) |
-| `center` | [x, y] | YES | Centre of the circle (mm) |
-| `radius` | number | YES | Circle radius (mm) |
-| `clockwise` | boolean | YES | True = clockwise arc, False = counterclockwise |
+| Field       | Type    | Required | Description                                    |
+| -------------| ---------| ----------| ------------------------------------------------|
+| `id`        | string  | YES      | Unique within the part                         |
+| `type`      | string  | YES      | `"ARC"`                                        |
+| `start`     | [x, y]  | YES      | Arc start point (mm)                           |
+| `end`       | [x, y]  | YES      | Arc end point (mm)                             |
+| `center`    | [x, y]  | YES      | Centre of the circle (mm)                      |
+| `radius`    | number  | YES      | Circle radius (mm)                             |
+| `clockwise` | boolean | YES      | True = clockwise arc, False = counterclockwise |
 
 The `radius` field is redundant (computable from `center` and `start`) but is required for robustness and validation. Parsers must verify `|start - center|` and `|end - center|` are within 0.01 mm of `radius`.
 

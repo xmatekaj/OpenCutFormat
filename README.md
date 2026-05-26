@@ -1,6 +1,8 @@
 # OCF — Open Cut Format
 
-**Version 1.0.0** | Open Standard for CAD/CAM Sheet-Metal Processing
+**This repository is under development**
+
+Open Standard for CAD/CAM Sheet-Metal Processing
 
 OCF is an open, JSON-based file format describing the complete sheet-metal cutting workflow: part definitions, material libraries, nesting layouts, machining operations, and (optionally) computed toolpaths. A single `.ocf` file is the entire project — geometry, technology, and nesting combined.
 

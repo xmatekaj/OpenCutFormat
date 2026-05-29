@@ -72,6 +72,59 @@ Two operations of the same `op_type` must not target the same contour simultaneo
 
 ---
 
+## Per-Segment Technology Assignment (SVG Command Indexing)
+
+For advanced scenarios where different parts of a single contour require different cutting parameters (e.g., reduced speed on curves, full speed on straight lines), use **`command_indices`** in the operation target:
+
+```json
+"target": {
+  "contour_id": "outer",
+  "command_indices": [1, 2]
+}
+```
+
+This applies the operation's `params` **only** to SVG commands at indices 1 and 2 within that contour's `d` string.
+
+**Example:** Waterjet with quality degradation on curves:
+
+```json
+[
+  {
+    "op_type": "WATERJET_CUT",
+    "target": {
+      "contour_id": "profile",
+      "command_indices": [1, 3, 5]  // Straight lines (L commands)
+    },
+    "params": {
+      "speed_mm_min": 150,
+      "quality": 4
+    }
+  },
+  {
+    "op_type": "WATERJET_CUT",
+    "target": {
+      "contour_id": "profile",
+      "command_indices": [2, 4]  // Arc commands
+    },
+    "params": {
+      "speed_mm_min": 80,
+      "quality": 1
+    }
+  }
+]
+```
+
+**Rules:**
+- `command_indices` is **optional**. If omitted, the operation targets the **entire contour**.
+- Indices are **zero-based**: 0 = `M` (Move), 1 = first draw command, etc.
+- **All commands in the path MUST be uppercase** (absolute coordinates). Lowercase relative commands (m, l, a, c, q, z) are not permitted in OCF paths — see [geometry.md §3.1](geometry.md#31-supported-path-commands).
+- Each command index in a contour can be targeted by **at most one operation** of the same `op_type`.
+- Non-overlapping indices from different operations on the same contour are allowed.
+
+**Implementation note:** CAM systems must parse the SVG path, extract commands by index, and apply the operation's `params` only to those segments. Parsers should validate that all commands are uppercase before indexing.
+
+---
+
 ## `lead_in` / `lead_out` Object (used in `toolpath_hints`)
 
 | Field | Type | Description |

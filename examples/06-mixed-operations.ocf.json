@@ -28,354 +28,74 @@
         "id": "part_control_panel",
         "name": "Control Panel Plate 300×200",
         "description": "Enclosure front panel. Cutouts for display, buttons, and cable gland. M6 threaded mounting holes. Serial number laser-marked.",
-        "tags": [
-          "panel",
-          "enclosure",
-          "mixed-ops"
-        ],
+        "tags": ["panel", "enclosure", "mixed-ops"],
         "compatible_thickness_min_mm": 2.0,
         "compatible_thickness_max_mm": 4.0,
         "geometry": {
           "bounding_box": {
-            "min": [
-              0,
-              0
-            ],
-            "max": [
-              300,
-              200
-            ]
+            "min": [0, 0],
+            "max": [300, 200]
           },
           "contours": [
             {
               "id": "outer",
               "role": "OUTER",
               "winding": "CCW",
-              "segments": [
-                {
-                  "id": "s_bot",
-                  "type": "LINE",
-                  "start": [
-                    5,
-                    0
-                  ],
-                  "end": [
-                    295,
-                    0
-                  ]
-                },
-                {
-                  "id": "s_br",
-                  "type": "ARC",
-                  "start": [
-                    295,
-                    0
-                  ],
-                  "end": [
-                    300,
-                    5
-                  ],
-                  "center": [
-                    295,
-                    5
-                  ],
-                  "radius": 5,
-                  "clockwise": false
-                },
-                {
-                  "id": "s_right",
-                  "type": "LINE",
-                  "start": [
-                    300,
-                    5
-                  ],
-                  "end": [
-                    300,
-                    195
-                  ]
-                },
-                {
-                  "id": "s_tr",
-                  "type": "ARC",
-                  "start": [
-                    300,
-                    195
-                  ],
-                  "end": [
-                    295,
-                    200
-                  ],
-                  "center": [
-                    295,
-                    195
-                  ],
-                  "radius": 5,
-                  "clockwise": false
-                },
-                {
-                  "id": "s_top",
-                  "type": "LINE",
-                  "start": [
-                    295,
-                    200
-                  ],
-                  "end": [
-                    5,
-                    200
-                  ]
-                },
-                {
-                  "id": "s_tl",
-                  "type": "ARC",
-                  "start": [
-                    5,
-                    200
-                  ],
-                  "end": [
-                    0,
-                    195
-                  ],
-                  "center": [
-                    5,
-                    195
-                  ],
-                  "radius": 5,
-                  "clockwise": false
-                },
-                {
-                  "id": "s_left",
-                  "type": "LINE",
-                  "start": [
-                    0,
-                    195
-                  ],
-                  "end": [
-                    0,
-                    5
-                  ]
-                },
-                {
-                  "id": "s_bl",
-                  "type": "ARC",
-                  "start": [
-                    0,
-                    5
-                  ],
-                  "end": [
-                    5,
-                    0
-                  ],
-                  "center": [
-                    5,
-                    5
-                  ],
-                  "radius": 5,
-                  "clockwise": false
-                }
-              ]
+              "d": "M 5 0 L 295 0 A 5 5 0 0 0 300 5 L 300 195 A 5 5 0 0 0 295 200 L 5 200 A 5 5 0 0 0 0 195 L 0 5 A 5 5 0 0 0 5 0 Z"
             },
             {
               "id": "cutout_display",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "display-cutout",
-                "large-hole"
-              ],
-              "segments": [
-                {
-                  "id": "d1",
-                  "type": "LINE",
-                  "start": [
-                    20,
-                    60
-                  ],
-                  "end": [
-                    180,
-                    60
-                  ]
-                },
-                {
-                  "id": "d2",
-                  "type": "LINE",
-                  "start": [
-                    180,
-                    60
-                  ],
-                  "end": [
-                    180,
-                    140
-                  ]
-                },
-                {
-                  "id": "d3",
-                  "type": "LINE",
-                  "start": [
-                    180,
-                    140
-                  ],
-                  "end": [
-                    20,
-                    140
-                  ]
-                },
-                {
-                  "id": "d4",
-                  "type": "LINE",
-                  "start": [
-                    20,
-                    140
-                  ],
-                  "end": [
-                    20,
-                    60
-                  ]
-                }
-              ]
+              "tags": ["display-cutout", "large-hole"],
+              "d": "M 20 60 L 180 60 L 180 140 L 20 140 Z"
             },
             {
               "id": "cutout_cable_gland",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "cable-gland",
-                "large-hole"
-              ],
-              "segments": [
-                {
-                  "id": "cg1",
-                  "type": "CIRCLE",
-                  "center": [
-                    240,
-                    100
-                  ],
-                  "radius": 18
-                }
-              ]
+              "tags": ["cable-gland", "large-hole"],
+              "d": "M 240 82 A 18 18 0 0 1 240 118 A 18 18 0 0 1 240 82 Z"
             },
             {
               "id": "hole_m6_tl",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "thread-m6",
-                "mounting-hole"
-              ],
-              "segments": [
-                {
-                  "id": "hm1",
-                  "type": "CIRCLE",
-                  "center": [
-                    15,
-                    185
-                  ],
-                  "radius": 2.5
-                }
-              ]
+              "tags": ["thread-m6", "mounting-hole"],
+              "d": "M 15 182.5 A 2.5 2.5 0 0 1 15 187.5 A 2.5 2.5 0 0 1 15 182.5 Z"
             },
             {
               "id": "hole_m6_tr",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "thread-m6",
-                "mounting-hole"
-              ],
-              "segments": [
-                {
-                  "id": "hm2",
-                  "type": "CIRCLE",
-                  "center": [
-                    285,
-                    185
-                  ],
-                  "radius": 2.5
-                }
-              ]
+              "tags": ["thread-m6", "mounting-hole"],
+              "d": "M 285 182.5 A 2.5 2.5 0 0 1 285 187.5 A 2.5 2.5 0 0 1 285 182.5 Z"
             },
             {
               "id": "hole_m6_bl",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "thread-m6",
-                "mounting-hole"
-              ],
-              "segments": [
-                {
-                  "id": "hm3",
-                  "type": "CIRCLE",
-                  "center": [
-                    15,
-                    15
-                  ],
-                  "radius": 2.5
-                }
-              ]
+              "tags": ["thread-m6", "mounting-hole"],
+              "d": "M 15 12.5 A 2.5 2.5 0 0 1 15 17.5 A 2.5 2.5 0 0 1 15 12.5 Z"
             },
             {
               "id": "hole_m6_br",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "thread-m6",
-                "mounting-hole"
-              ],
-              "segments": [
-                {
-                  "id": "hm4",
-                  "type": "CIRCLE",
-                  "center": [
-                    285,
-                    15
-                  ],
-                  "radius": 2.5
-                }
-              ]
+              "tags": ["thread-m6", "mounting-hole"],
+              "d": "M 285 12.5 A 2.5 2.5 0 0 1 285 17.5 A 2.5 2.5 0 0 1 285 12.5 Z"
             },
             {
               "id": "mark_serial",
               "role": "OPEN",
-              "tags": [
-                "serial-number",
-                "marking-text"
-              ],
-              "segments": [
-                {
-                  "id": "ms1",
-                  "type": "LINE",
-                  "start": [
-                    200,
-                    20
-                  ],
-                  "end": [
-                    280,
-                    20
-                  ]
-                }
-              ]
+              "tags": ["serial-number", "marking-text"],
+              "d": "M 200 20 L 280 20"
             },
             {
               "id": "engrave_label",
               "role": "OPEN",
-              "tags": [
-                "part-label",
-                "engraving"
-              ],
-              "segments": [
-                {
-                  "id": "el1",
-                  "type": "LINE",
-                  "start": [
-                    200,
-                    170
-                  ],
-                  "end": [
-                    290,
-                    170
-                  ]
-                }
-              ]
+              "tags": ["part-label", "engraving"],
+              "d": "M 200 170 L 290 170"
             }
           ],
           "source_format": "DXF"
@@ -426,11 +146,7 @@
             "id": "op_laser_large_holes",
             "op_type": "LASER_CUT",
             "target": {
-              "contour_tags": [
-                "display-cutout",
-                "large-hole",
-                "cable-gland"
-              ]
+              "contour_tags": ["display-cutout", "large-hole", "cable-gland"]
             },
             "priority": 2,
             "notes": "Large internal cutouts cut first, before mounting holes.",
@@ -460,12 +176,37 @@
             }
           },
           {
+            "id": "op_laser_display_edges_fast",
+            "op_type": "LASER_CUT",
+            "target": {
+              "contour_id": "cutout_display",
+              "command_indices": [1, 3]
+            },
+            "priority": 3,
+            "notes": "Horizontal edges (top/bottom) of display cutout - faster speed",
+            "params": {
+              "speed_mm_min": 6000,
+              "power_pct": 65,
+              "gas": "N2",
+              "gas_pressure_bar": 14.0,
+              "focus_offset_mm": 0.0,
+              "cutting_height_mm": 0.4,
+              "pierce_mode": "STATIC",
+              "pierce_time_ms": 200,
+              "pierce_power_pct": 20,
+              "kerf_mm": 0.25,
+              "quality": "HIGH"
+            },
+            "toolpath_hints": {
+              "lead_in": { "type": "ARC", "radius_mm": 2.0 },
+              "lead_out": { "type": "ARC", "radius_mm": 2.0, "overcut_mm": 0.2 }
+            }
+          },
+          {
             "id": "op_drill_m6_prehole",
             "op_type": "DRILLING",
             "target": {
-              "contour_tags": [
-                "thread-m6"
-              ]
+              "contour_tags": ["thread-m6"]
             },
             "priority": 1,
             "notes": "Drill M6 tap drill Ø5.0 mm through 3mm stainless. Single peck, flood coolant.",
@@ -485,9 +226,7 @@
             "id": "op_tap_m6",
             "op_type": "TAPPING",
             "target": {
-              "contour_tags": [
-                "thread-m6"
-              ]
+              "contour_tags": ["thread-m6"]
             },
             "priority": 3,
             "notes": "M6 × 1.0 tapping after pre-drilling. Right-hand thread.",
@@ -505,9 +244,7 @@
             "id": "op_marking_serial",
             "op_type": "MARKING",
             "target": {
-              "contour_tags": [
-                "serial-number"
-              ]
+              "contour_tags": ["serial-number"]
             },
             "priority": 15,
             "params": {
@@ -526,9 +263,7 @@
             "id": "op_engrave_label",
             "op_type": "ENGRAVING",
             "target": {
-              "contour_tags": [
-                "part-label"
-              ]
+              "contour_tags": ["part-label"]
             },
             "priority": 14,
             "params": {
@@ -561,18 +296,9 @@
       "machine": {
         "id": "laser_drill_combo",
         "name": "Laser + Drill Combo Centre",
-        "type": [
-          "LASER",
-          "MILLING"
-        ],
+        "type": ["LASER", "MILLING"],
         "post_processor": "generic_combined_v1",
-        "capabilities": [
-          "LASER_CUT",
-          "MARKING",
-          "ENGRAVING",
-          "DRILLING",
-          "TAPPING"
-        ]
+        "capabilities": ["LASER_CUT", "MARKING", "ENGRAVING", "DRILLING", "TAPPING"]
       },
       "nesting_params": {
         "part_spacing_mm": 8.0,
@@ -606,9 +332,7 @@
               "id": "ext_serial_2",
               "op_type": "MARKING",
               "target": {
-                "contour_tags": [
-                  "serial-number"
-                ]
+                "contour_tags": ["serial-number"]
               },
               "priority": 15,
               "notes": "Override serial number text for second instance.",

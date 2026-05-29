@@ -12,7 +12,7 @@
 
 OCF (Open Cut Format) is an open, machine-readable file format for sheet-metal and flat-material cutting projects. It encodes the complete lifecycle of a cutting job:
 
-1. **Geometry** — part shapes as contours and segments
+1. **Geometry** — part shapes as contours with SVG path data
 2. **Materials** — sheet stock definitions
 3. **Nesting** — placement of parts on sheets
 4. **Technology** — machining operations assigned to contours
@@ -217,7 +217,7 @@ The core of the library. Each `part` defines the geometry of one unique part sha
 
 #### 4.2.2 Contour Object
 
-A contour is a closed or open loop of geometric segments. See [geometry.md](geometry.md) for full rules.
+A contour is a closed or open loop encoded as a standard SVG path data string. See [geometry.md](geometry.md) for full rules and path syntax.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -225,26 +225,26 @@ A contour is a closed or open loop of geometric segments. See [geometry.md](geom
 | `role` | string | **YES** | `OUTER`, `INNER`, `OPEN` |
 | `winding` | string | no | `CCW` (recommended for OUTER), `CW` (recommended for INNER) |
 | `tags` | string[] | no | Used for operation targeting (e.g. `"hole"`, `"slot"`, `"thread-m8"`) |
-| `segments` | object[] | **YES** | Ordered list of segments |
+| `d` | string | **YES** | SVG path data string (see [geometry.md §3](geometry.md#3-svg-path-data-syntax)) |
 
 `role` semantics:
 - `OUTER` — the external profile of the part (always one per part)
 - `INNER` — a cutout or hole inside the part
 - `OPEN` — a non-closed path (for scoring, marking, or partial cuts)
 
-#### 4.2.3 Segment Objects
+**Example contour:**
 
-See [geometry.md](geometry.md) for the detailed geometry model. Summary:
+```json
+{
+  "id": "contour_outer",
+  "role": "OUTER",
+  "winding": "CCW",
+  "tags": ["profile"],
+  "d": "M 10 0 L 190 0 A 10 10 0 0 0 200 10 L 200 140 A 10 10 0 0 0 190 150 L 10 150 A 10 10 0 0 0 0 140 L 0 10 A 10 10 0 0 0 10 0 Z"
+}
+```
 
-| `type` | Required fields | Description |
-|---|---|---|
-| `LINE` | `start`, `end` | Straight line segment |
-| `ARC` | `start`, `end`, `center`, `clockwise` | Circular arc |
-| `CIRCLE` | `center`, `radius` | Complete circle (self-contained contour) |
-| `SPLINE` | `control_points`, `degree` | Bézier spline |
-| `POLYLINE` | `points` | Sequence of connected lines (shorthand) |
-
-All coordinates are stored in millimetres (see §1.4). All IDs within a part must be unique.
+All coordinates in the `d` string are stored in millimetres (see §1.4). All contour IDs within a part must be unique.
 
 #### 4.2.4 `properties` Object
 
@@ -362,15 +362,24 @@ Each entry represents one physical copy of a part placed on the sheet.
 | `transform.x` | number | **YES** | X offset from sheet origin (mm) |
 | `transform.y` | number | **YES** | Y offset from sheet origin (mm) |
 | `transform.rotation_deg` | number | 0 | Rotation in degrees, counterclockwise |
-| `transform.mirror_x` | boolean | false | Mirror about X axis (flip Y) |
-| `transform.mirror_y` | boolean | false | Mirror about Y axis (flip X) |
+| `transform.mirror_x` | boolean | false | Mirror about X axis (reflect across bounding box center) |
+| `transform.mirror_y` | boolean | false | Mirror about Y axis (reflect across bounding box center) |
 | `locked` | boolean | false | If true, nesting optimizer must not move this instance |
 | `priority` | integer | 0 | Higher priority instances are placed first |
 | `label` | string | no | Display label override |
 | `override_operations` | object[] | no | Fully replaces part default_operations for this instance |
 | `extend_operations` | object[] | no | Merges on top of part default_operations for this instance |
 
-Transform order: mirror first, then rotation, then translation.
+**Transform Semantics:**
+
+Mirror operations are anchored to the **bounding box center** of the part, not the library origin. This ensures UI predictability: when a user clicks "Mirror", the part flips around its geometric center, not around (0,0).
+
+Transform order:
+1. `mirror_x` and `mirror_y` (both relative to bounding box center)
+2. `rotation_deg` (rotation around bounding box center)
+3. Translation by (`x`, `y`)
+
+See [geometry.md §1.2](geometry.md#12-transform-order--mirror-reference-point) for detailed algorithmic implementation.
 
 ### 5.5 `constraints` Array
 
@@ -378,22 +387,58 @@ Constraints describe relationships between instances that must be preserved duri
 
 #### COMMON_LINE_CUTTING
 
-Two collinear segments from adjacent parts share a single cut pass.
+Two collinear edges from adjacent parts share a single cut pass. With SVG path encoding, edges are identified by contour ID and **command index range** within the `d` string.
 
 ```json
 {
   "id": "con_001",
   "type": "COMMON_LINE_CUTTING",
   "entities": [
-    { "instance_id": "inst_001", "segment_id": "seg_right" },
-    { "instance_id": "inst_002", "segment_id": "seg_left" }
+    {
+      "instance_id": "inst_001",
+      "contour_id": "outer",
+      "d_command_index": 1,
+      "d_command_count": 1
+    },
+    {
+      "instance_id": "inst_002",
+      "contour_id": "outer",
+      "d_command_index": 3,
+      "d_command_count": 1
+    }
   ],
   "strategy": "SINGLE_PASS",
-  "shared_segment_tolerance_mm": 0.05
+  "shared_segment_tolerance_mm": 0.05,
+  "notes": "Bottom edge of plate A (command 1) cuts together with top edge of plate B (command 3)"
 }
 ```
 
-`strategy`: `"SINGLE_PASS"` (cut once, both parts gain the edge), `"DOUBLE_PASS"` (cut twice with offset for kerf), `"SHARED_EDGE"` (parts touch, zero gap).
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `instance_id` | string | **YES** | Reference to a workspace instance |
+| `contour_id` | string | **YES** | Reference to a contour within the part |
+| `d_command_index` | integer | **YES** | Zero-based index of the first SVG command in the `d` string (e.g., 0 = M, 1 = first L, etc.) |
+| `d_command_count` | integer | no | Number of consecutive commands to include (default 1). Use >1 for multi-segment edges (e.g., L + A + L) |
+
+**SVG Command Counting Rules:**
+- `M` (Move) = command 0
+- First `L`, `A`, `C`, `Q`, etc. = command 1
+- Subsequent draw commands increment the index
+- `Z` (Close) counts as a command
+
+**Example:** For path `"M 0 0 L 150 0 L 150 100 L 0 100 Z"`:
+- Index 0: `M 0 0`
+- Index 1: `L 150 0` ← first edge
+- Index 2: `L 150 100`
+- Index 3: `L 0 100` ← third edge
+- Index 4: `Z`
+
+`strategy`: 
+- `"SINGLE_PASS"` — cut once, both parts gain the edge
+- `"DOUBLE_PASS"` — cut twice with offset for kerf
+- `"SHARED_EDGE"` — parts touch, zero gap
+
+**Implementation Note:** CAM systems must parse the SVG path, extract commands by index, and verify geometric collinearity (tolerance ≤ `shared_segment_tolerance_mm`).
 
 #### FIXED_POSITION
 

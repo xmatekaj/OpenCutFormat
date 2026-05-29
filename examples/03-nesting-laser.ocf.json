@@ -26,156 +26,39 @@
       {
         "id": "part_bracket_a",
         "name": "L-Bracket 80×60",
-        "tags": [
-          "bracket"
-        ],
+        "tags": ["bracket"],
         "geometry": {
           "bounding_box": {
-            "min": [
-              0,
-              0
-            ],
-            "max": [
-              80,
-              60
-            ]
+            "min": [0, 0],
+            "max": [80, 60]
           },
           "contours": [
             {
               "id": "outer",
               "role": "OUTER",
               "winding": "CCW",
-              "segments": [
-                {
-                  "id": "s1",
-                  "type": "LINE",
-                  "start": [
-                    0,
-                    0
-                  ],
-                  "end": [
-                    80,
-                    0
-                  ]
-                },
-                {
-                  "id": "s2",
-                  "type": "LINE",
-                  "start": [
-                    80,
-                    0
-                  ],
-                  "end": [
-                    80,
-                    20
-                  ]
-                },
-                {
-                  "id": "s3",
-                  "type": "LINE",
-                  "start": [
-                    80,
-                    20
-                  ],
-                  "end": [
-                    20,
-                    20
-                  ]
-                },
-                {
-                  "id": "s4",
-                  "type": "LINE",
-                  "start": [
-                    20,
-                    20
-                  ],
-                  "end": [
-                    20,
-                    60
-                  ]
-                },
-                {
-                  "id": "s5",
-                  "type": "LINE",
-                  "start": [
-                    20,
-                    60
-                  ],
-                  "end": [
-                    0,
-                    60
-                  ]
-                },
-                {
-                  "id": "s6",
-                  "type": "LINE",
-                  "start": [
-                    0,
-                    60
-                  ],
-                  "end": [
-                    0,
-                    0
-                  ]
-                }
-              ]
+              "d": "M 0 0 L 80 0 L 80 20 L 20 20 L 20 60 L 0 60 Z"
             },
             {
               "id": "hole_1",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "bolt-hole"
-              ],
-              "segments": [
-                {
-                  "id": "sh1",
-                  "type": "CIRCLE",
-                  "center": [
-                    10,
-                    10
-                  ],
-                  "radius": 4.5
-                }
-              ]
+              "tags": ["bolt-hole"],
+              "d": "M 10 5.5 A 4.5 4.5 0 0 1 10 14.5 A 4.5 4.5 0 0 1 10 5.5 Z"
             },
             {
               "id": "hole_2",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "bolt-hole"
-              ],
-              "segments": [
-                {
-                  "id": "sh2",
-                  "type": "CIRCLE",
-                  "center": [
-                    10,
-                    50
-                  ],
-                  "radius": 4.5
-                }
-              ]
+              "tags": ["bolt-hole"],
+              "d": "M 10 45.5 A 4.5 4.5 0 0 1 10 54.5 A 4.5 4.5 0 0 1 10 45.5 Z"
             },
             {
               "id": "hole_3",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "bolt-hole"
-              ],
-              "segments": [
-                {
-                  "id": "sh3",
-                  "type": "CIRCLE",
-                  "center": [
-                    60,
-                    10
-                  ],
-                  "radius": 4.5
-                }
-              ]
+              "tags": ["bolt-hole"],
+              "d": "M 60 5.5 A 4.5 4.5 0 0 1 60 14.5 A 4.5 4.5 0 0 1 60 5.5 Z"
             }
           ],
           "source_format": "DXF"
@@ -220,56 +103,25 @@
       {
         "id": "part_disc_100",
         "name": "Disc Ø100 mm",
-        "tags": [
-          "round",
-          "disc"
-        ],
+        "tags": ["round", "disc"],
         "geometry": {
           "bounding_box": {
-            "min": [
-              0,
-              0
-            ],
-            "max": [
-              100,
-              100
-            ]
+            "min": [0, 0],
+            "max": [100, 100]
           },
           "contours": [
             {
               "id": "outer",
               "role": "OUTER",
               "winding": "CCW",
-              "segments": [
-                {
-                  "id": "s1",
-                  "type": "CIRCLE",
-                  "center": [
-                    50,
-                    50
-                  ],
-                  "radius": 50
-                }
-              ]
+              "d": "M 50 0 A 50 50 0 0 1 50 100 A 50 50 0 0 1 50 0 Z"
             },
             {
               "id": "center_hole",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "center-hole"
-              ],
-              "segments": [
-                {
-                  "id": "sh1",
-                  "type": "CIRCLE",
-                  "center": [
-                    50,
-                    50
-                  ],
-                  "radius": 10
-                }
-              ]
+              "tags": ["center-hole"],
+              "d": "M 50 40 A 10 10 0 0 1 50 60 A 10 10 0 0 1 50 40 Z"
             }
           ],
           "source_format": "DXF"
@@ -314,221 +166,53 @@
       {
         "id": "part_rect_plate",
         "name": "Mounting Plate 120×80",
-        "tags": [
-          "plate"
-        ],
+        "tags": ["plate"],
         "geometry": {
           "bounding_box": {
-            "min": [
-              0,
-              0
-            ],
-            "max": [
-              120,
-              80
-            ]
+            "min": [0, 0],
+            "max": [120, 80]
           },
           "contours": [
             {
               "id": "outer",
               "role": "OUTER",
               "winding": "CCW",
-              "segments": [
-                {
-                  "id": "s1",
-                  "type": "LINE",
-                  "start": [
-                    0,
-                    0
-                  ],
-                  "end": [
-                    120,
-                    0
-                  ]
-                },
-                {
-                  "id": "s2",
-                  "type": "LINE",
-                  "start": [
-                    120,
-                    0
-                  ],
-                  "end": [
-                    120,
-                    80
-                  ]
-                },
-                {
-                  "id": "s3",
-                  "type": "LINE",
-                  "start": [
-                    120,
-                    80
-                  ],
-                  "end": [
-                    0,
-                    80
-                  ]
-                },
-                {
-                  "id": "s4",
-                  "type": "LINE",
-                  "start": [
-                    0,
-                    80
-                  ],
-                  "end": [
-                    0,
-                    0
-                  ]
-                }
-              ]
+              "d": "M 0 0 L 120 0 L 120 80 L 0 80 Z"
             },
             {
               "id": "slot_1",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "slot"
-              ],
-              "segments": [
-                {
-                  "id": "sl1",
-                  "type": "LINE",
-                  "start": [
-                    25,
-                    30
-                  ],
-                  "end": [
-                    95,
-                    30
-                  ]
-                },
-                {
-                  "id": "sl2",
-                  "type": "ARC",
-                  "start": [
-                    95,
-                    30
-                  ],
-                  "end": [
-                    95,
-                    50
-                  ],
-                  "center": [
-                    95,
-                    40
-                  ],
-                  "radius": 10,
-                  "clockwise": false
-                },
-                {
-                  "id": "sl3",
-                  "type": "LINE",
-                  "start": [
-                    95,
-                    50
-                  ],
-                  "end": [
-                    25,
-                    50
-                  ]
-                },
-                {
-                  "id": "sl4",
-                  "type": "ARC",
-                  "start": [
-                    25,
-                    50
-                  ],
-                  "end": [
-                    25,
-                    30
-                  ],
-                  "center": [
-                    25,
-                    40
-                  ],
-                  "radius": 10,
-                  "clockwise": false
-                }
-              ]
+              "tags": ["slot"],
+              "d": "M 25 30 L 95 30 A 10 10 0 0 0 95 50 L 25 50 A 10 10 0 0 0 25 30 Z"
             },
             {
               "id": "hole_tl",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "bolt-hole"
-              ],
-              "segments": [
-                {
-                  "id": "sh1",
-                  "type": "CIRCLE",
-                  "center": [
-                    10,
-                    70
-                  ],
-                  "radius": 4.5
-                }
-              ]
+              "tags": ["bolt-hole"],
+              "d": "M 10 65.5 A 4.5 4.5 0 0 1 10 74.5 A 4.5 4.5 0 0 1 10 65.5 Z"
             },
             {
               "id": "hole_tr",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "bolt-hole"
-              ],
-              "segments": [
-                {
-                  "id": "sh2",
-                  "type": "CIRCLE",
-                  "center": [
-                    110,
-                    70
-                  ],
-                  "radius": 4.5
-                }
-              ]
+              "tags": ["bolt-hole"],
+              "d": "M 110 65.5 A 4.5 4.5 0 0 1 110 74.5 A 4.5 4.5 0 0 1 110 65.5 Z"
             },
             {
               "id": "hole_bl",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "bolt-hole"
-              ],
-              "segments": [
-                {
-                  "id": "sh3",
-                  "type": "CIRCLE",
-                  "center": [
-                    10,
-                    10
-                  ],
-                  "radius": 4.5
-                }
-              ]
+              "tags": ["bolt-hole"],
+              "d": "M 10 5.5 A 4.5 4.5 0 0 1 10 14.5 A 4.5 4.5 0 0 1 10 5.5 Z"
             },
             {
               "id": "hole_br",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "bolt-hole"
-              ],
-              "segments": [
-                {
-                  "id": "sh4",
-                  "type": "CIRCLE",
-                  "center": [
-                    110,
-                    10
-                  ],
-                  "radius": 4.5
-                }
-              ]
+              "tags": ["bolt-hole"],
+              "d": "M 110 5.5 A 4.5 4.5 0 0 1 110 14.5 A 4.5 4.5 0 0 1 110 5.5 Z"
             }
           ],
           "source_format": "DXF"
@@ -590,10 +274,7 @@
         "type": "LASER",
         "manufacturer": "Generic",
         "post_processor": "generic_laser_v1",
-        "capabilities": [
-          "LASER_CUT",
-          "MARKING"
-        ],
+        "capabilities": ["LASER_CUT", "MARKING"],
         "bed_width_mm": 3000,
         "bed_height_mm": 1500
       },

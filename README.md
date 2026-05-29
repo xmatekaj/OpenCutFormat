@@ -36,7 +36,7 @@ OCF is an open, JSON-based file format describing the complete sheet-metal cutti
 ```
 specification/
   OCF-v1.0.md       Master specification (top-level reading start)
-  geometry.md       Coordinate system, segment types, contour rules
+  geometry.md       Coordinate system, SVG path syntax, contour rules
   operations.md     Complete operations catalog with all parameters
   schema.json       JSON Schema Draft-07 for validation
 
@@ -76,7 +76,7 @@ Any conforming parser must tolerate unknown `op_type` values, unknown top-level 
 meta         Project metadata, version, application, author
 library
   materials  Named material definitions (density, type)
-  parts      Geometry definitions (contours, segments, default ops)
+  parts      Geometry definitions (contours with SVG paths, default ops)
 workspaces
   sheet      Material + thickness + dimensions
   instances  Positioned instances of library parts (transforms)

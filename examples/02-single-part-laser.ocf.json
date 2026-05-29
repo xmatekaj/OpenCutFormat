@@ -44,61 +44,44 @@
               "id": "contour_outer",
               "role": "OUTER",
               "winding": "CCW",
-              "segments": [
-                { "id": "seg_bot",   "type": "LINE", "start": [10, 0],   "end": [190, 0] },
-                { "id": "seg_br",    "type": "ARC",  "start": [190, 0],  "end": [200, 10], "center": [190, 10], "radius": 10, "clockwise": false },
-                { "id": "seg_right", "type": "LINE", "start": [200, 10], "end": [200, 140] },
-                { "id": "seg_tr",    "type": "ARC",  "start": [200, 140],"end": [190, 150],"center": [190, 140],"radius": 10, "clockwise": false },
-                { "id": "seg_top",   "type": "LINE", "start": [190, 150],"end": [10, 150] },
-                { "id": "seg_tl",    "type": "ARC",  "start": [10, 150], "end": [0, 140],  "center": [10, 140], "radius": 10, "clockwise": false },
-                { "id": "seg_left",  "type": "LINE", "start": [0, 140],  "end": [0, 10] },
-                { "id": "seg_bl",    "type": "ARC",  "start": [0, 10],   "end": [10, 0],   "center": [10, 10],  "radius": 10, "clockwise": false }
-              ]
+              "d": "M 10 0 L 190 0 A 10 10 0 0 0 200 10 L 200 140 A 10 10 0 0 0 190 150 L 10 150 A 10 10 0 0 0 0 140 L 0 10 A 10 10 0 0 0 10 0 Z",
+              "lead_in_command_index": 2,
+              "notes": "Pierce at right edge (command index 2), not at start"
             },
             {
               "id": "contour_hole_center",
               "role": "INNER",
               "winding": "CW",
               "tags": ["central-hole"],
-              "segments": [
-                { "id": "seg_hole_c", "type": "CIRCLE", "center": [100, 75], "radius": 20 }
-              ]
+              "d": "M 100 55 A 20 20 0 0 1 100 95 A 20 20 0 0 1 100 55 Z"
             },
             {
               "id": "contour_hole_bl",
               "role": "INNER",
               "winding": "CW",
               "tags": ["bolt-hole"],
-              "segments": [
-                { "id": "seg_hole_bl", "type": "CIRCLE", "center": [30, 30], "radius": 6.5 }
-              ]
+              "d": "M 30 23.5 A 6.5 6.5 0 0 1 30 36.5 A 6.5 6.5 0 0 1 30 23.5 Z"
             },
             {
               "id": "contour_hole_br",
               "role": "INNER",
               "winding": "CW",
               "tags": ["bolt-hole"],
-              "segments": [
-                { "id": "seg_hole_br", "type": "CIRCLE", "center": [170, 30], "radius": 6.5 }
-              ]
+              "d": "M 170 23.5 A 6.5 6.5 0 0 1 170 36.5 A 6.5 6.5 0 0 1 170 23.5 Z"
             },
             {
               "id": "contour_hole_tr",
               "role": "INNER",
               "winding": "CW",
               "tags": ["bolt-hole"],
-              "segments": [
-                { "id": "seg_hole_tr", "type": "CIRCLE", "center": [170, 120], "radius": 6.5 }
-              ]
+              "d": "M 170 113.5 A 6.5 6.5 0 0 1 170 126.5 A 6.5 6.5 0 0 1 170 113.5 Z"
             },
             {
               "id": "contour_hole_tl",
               "role": "INNER",
               "winding": "CW",
               "tags": ["bolt-hole"],
-              "segments": [
-                { "id": "seg_hole_tl", "type": "CIRCLE", "center": [30, 120], "radius": 6.5 }
-              ]
+              "d": "M 30 113.5 A 6.5 6.5 0 0 1 30 126.5 A 6.5 6.5 0 0 1 30 113.5 Z"
             }
           ],
           "source_format": "DXF"

@@ -25,94 +25,25 @@
       {
         "id": "part_plate_a",
         "name": "Plate A 150×100",
-        "tags": [
-          "plate"
-        ],
+        "tags": ["plate"],
         "geometry": {
           "bounding_box": {
-            "min": [
-              0,
-              0
-            ],
-            "max": [
-              150,
-              100
-            ]
+            "min": [0, 0],
+            "max": [150, 100]
           },
           "contours": [
             {
               "id": "outer",
               "role": "OUTER",
               "winding": "CCW",
-              "segments": [
-                {
-                  "id": "seg_a_bot",
-                  "type": "LINE",
-                  "start": [
-                    0,
-                    0
-                  ],
-                  "end": [
-                    150,
-                    0
-                  ]
-                },
-                {
-                  "id": "seg_a_right",
-                  "type": "LINE",
-                  "start": [
-                    150,
-                    0
-                  ],
-                  "end": [
-                    150,
-                    100
-                  ]
-                },
-                {
-                  "id": "seg_a_top",
-                  "type": "LINE",
-                  "start": [
-                    150,
-                    100
-                  ],
-                  "end": [
-                    0,
-                    100
-                  ]
-                },
-                {
-                  "id": "seg_a_left",
-                  "type": "LINE",
-                  "start": [
-                    0,
-                    100
-                  ],
-                  "end": [
-                    0,
-                    0
-                  ]
-                }
-              ]
+              "d": "M 0 0 L 150 0 L 150 100 L 0 100 Z"
             },
             {
               "id": "hole_a",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "bolt-hole"
-              ],
-              "segments": [
-                {
-                  "id": "sha",
-                  "type": "CIRCLE",
-                  "center": [
-                    75,
-                    50
-                  ],
-                  "radius": 8
-                }
-              ]
+              "tags": ["bolt-hole"],
+              "d": "M 75 42 A 8 8 0 0 1 75 58 A 8 8 0 0 1 75 42 Z"
             }
           ],
           "source_format": "DXF"
@@ -157,145 +88,25 @@
       {
         "id": "part_plate_b",
         "name": "Plate B 150×80",
-        "tags": [
-          "plate"
-        ],
+        "tags": ["plate"],
         "geometry": {
           "bounding_box": {
-            "min": [
-              0,
-              0
-            ],
-            "max": [
-              150,
-              80
-            ]
+            "min": [0, 0],
+            "max": [150, 80]
           },
           "contours": [
             {
               "id": "outer",
               "role": "OUTER",
               "winding": "CCW",
-              "segments": [
-                {
-                  "id": "seg_b_bot",
-                  "type": "LINE",
-                  "start": [
-                    0,
-                    0
-                  ],
-                  "end": [
-                    150,
-                    0
-                  ]
-                },
-                {
-                  "id": "seg_b_right",
-                  "type": "LINE",
-                  "start": [
-                    150,
-                    0
-                  ],
-                  "end": [
-                    150,
-                    80
-                  ]
-                },
-                {
-                  "id": "seg_b_top",
-                  "type": "LINE",
-                  "start": [
-                    150,
-                    80
-                  ],
-                  "end": [
-                    0,
-                    80
-                  ]
-                },
-                {
-                  "id": "seg_b_left",
-                  "type": "LINE",
-                  "start": [
-                    0,
-                    80
-                  ],
-                  "end": [
-                    0,
-                    0
-                  ]
-                }
-              ]
+              "d": "M 0 0 L 150 0 L 150 80 L 0 80 Z"
             },
             {
               "id": "slot_b",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "slot"
-              ],
-              "segments": [
-                {
-                  "id": "sl1",
-                  "type": "LINE",
-                  "start": [
-                    30,
-                    30
-                  ],
-                  "end": [
-                    120,
-                    30
-                  ]
-                },
-                {
-                  "id": "sl2",
-                  "type": "ARC",
-                  "start": [
-                    120,
-                    30
-                  ],
-                  "end": [
-                    120,
-                    50
-                  ],
-                  "center": [
-                    120,
-                    40
-                  ],
-                  "radius": 10,
-                  "clockwise": false
-                },
-                {
-                  "id": "sl3",
-                  "type": "LINE",
-                  "start": [
-                    120,
-                    50
-                  ],
-                  "end": [
-                    30,
-                    50
-                  ]
-                },
-                {
-                  "id": "sl4",
-                  "type": "ARC",
-                  "start": [
-                    30,
-                    50
-                  ],
-                  "end": [
-                    30,
-                    30
-                  ],
-                  "center": [
-                    30,
-                    40
-                  ],
-                  "radius": 10,
-                  "clockwise": false
-                }
-              ]
+              "tags": ["slot"],
+              "d": "M 30 30 L 120 30 A 10 10 0 0 0 120 50 L 30 50 A 10 10 0 0 0 30 30 Z"
             }
           ],
           "source_format": "DXF"
@@ -354,9 +165,7 @@
         "name": "Fiber Laser 2 kW",
         "type": "LASER",
         "post_processor": "generic_laser_v1",
-        "capabilities": [
-          "LASER_CUT"
-        ]
+        "capabilities": ["LASER_CUT"]
       },
       "nesting_params": {
         "part_spacing_mm": 0.0,
@@ -390,23 +199,27 @@
       ],
       "constraints": [
         {
-          "id": "con_common_top_a_bot_b",
+          "id": "con_common_edge",
           "type": "COMMON_LINE_CUTTING",
           "entities": [
             {
               "instance_id": "inst_plate_a",
-              "segment_id": "seg_a_bot",
-              "contour_id": "outer"
+              "contour_id": "outer",
+              "d_command_index": 1,
+              "d_command_count": 1,
+              "notes": "Bottom edge: L 150 0 (command index 1)"
             },
             {
               "instance_id": "inst_plate_b",
-              "segment_id": "seg_b_top",
-              "contour_id": "outer"
+              "contour_id": "outer",
+              "d_command_index": 3,
+              "d_command_count": 1,
+              "notes": "Top edge: L 0 80 (command index 3)"
             }
           ],
           "strategy": "SINGLE_PASS",
           "shared_segment_tolerance_mm": 0.05,
-          "notes": "seg_a_bot (y=10 in sheet space, x from 10 to 160) coincides with seg_b_top (y=190 in sheet space, x from 10 to 160). Cut once, both parts gain this edge."
+          "notes": "The bottom edge of plate A (path command 1) coincides with the top edge of plate B (path command 3) in sheet space. Cut once, both parts gain this edge."
         }
       ],
       "operations": [],

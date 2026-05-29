@@ -38,94 +38,10 @@
       "additionalProperties": true
     },
 
-    "segment": {
-      "type": "object",
-      "required": ["id", "type"],
-      "properties": {
-        "id": { "$ref": "#/definitions/non_empty_string" },
-        "type": {
-          "type": "string",
-          "enum": ["LINE", "ARC", "CIRCLE", "SPLINE", "POLYLINE"]
-        }
-      },
-      "allOf": [
-        {
-          "if": { "properties": { "type": { "const": "LINE" } } },
-          "then": {
-            "required": ["start", "end"],
-            "properties": {
-              "start": { "$ref": "#/definitions/point2d" },
-              "end": { "$ref": "#/definitions/point2d" }
-            }
-          }
-        },
-        {
-          "if": { "properties": { "type": { "const": "ARC" } } },
-          "then": {
-            "required": ["start", "end", "center", "radius", "clockwise"],
-            "properties": {
-              "start": { "$ref": "#/definitions/point2d" },
-              "end": { "$ref": "#/definitions/point2d" },
-              "center": { "$ref": "#/definitions/point2d" },
-              "radius": { "type": "number", "exclusiveMinimum": 0 },
-              "clockwise": { "type": "boolean" }
-            }
-          }
-        },
-        {
-          "if": { "properties": { "type": { "const": "CIRCLE" } } },
-          "then": {
-            "required": ["center", "radius"],
-            "properties": {
-              "center": { "$ref": "#/definitions/point2d" },
-              "radius": { "type": "number", "exclusiveMinimum": 0 }
-            }
-          }
-        },
-        {
-          "if": { "properties": { "type": { "const": "SPLINE" } } },
-          "then": {
-            "required": ["start", "end", "control_points", "degree"],
-            "properties": {
-              "start": { "$ref": "#/definitions/point2d" },
-              "end": { "$ref": "#/definitions/point2d" },
-              "control_points": {
-                "type": "array",
-                "items": { "$ref": "#/definitions/point2d" },
-                "minItems": 3
-              },
-              "degree": { "type": "integer", "enum": [2, 3] },
-              "knots": {
-                "type": "array",
-                "items": { "type": "number" }
-              },
-              "weights": {
-                "type": "array",
-                "items": { "type": "number" }
-              }
-            }
-          }
-        },
-        {
-          "if": { "properties": { "type": { "const": "POLYLINE" } } },
-          "then": {
-            "required": ["points"],
-            "properties": {
-              "points": {
-                "type": "array",
-                "items": { "$ref": "#/definitions/point2d" },
-                "minItems": 2
-              }
-            }
-          }
-        }
-      ],
-      "additionalProperties": true
-    },
 
     "contour": {
       "type": "object",
-      "required": ["id", "role", "segments"],
+      "required": ["id", "role", "d"],
       "properties": {
         "id": { "$ref": "#/definitions/non_empty_string" },
         "role": {
@@ -140,10 +56,16 @@
           "type": "array",
           "items": { "type": "string" }
         },
-        "segments": {
-          "type": "array",
-          "items": { "$ref": "#/definitions/segment" },
-          "minItems": 1
+        "d": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^\\s*[M]\\s*[-+]?[0-9]*\\.?[0-9]+",
+          "description": "Standard SVG path data string containing a continuous stream of geometric commands (M, L, A, Z, etc.) in millimetres. MUST use only uppercase commands (M, L, H, V, A, C, S, Q, T, Z). Lowercase relative commands are not permitted."
+        },
+        "lead_in_command_index": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Zero-based SVG command index where machine should pierce/enter material. If omitted, default is 0 (start at M)."
         }
       },
       "additionalProperties": true
@@ -173,6 +95,12 @@
         "contour_tags": {
           "type": "array",
           "items": { "type": "string" }
+        },
+        "command_indices": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 0 },
+          "minItems": 1,
+          "description": "SVG path command indices within the contour's d string to target. Zero-based: 0=M, 1=first draw command, etc. Allows per-segment quality/speed override."
         }
       },
       "additionalProperties": true

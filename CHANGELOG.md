@@ -16,9 +16,11 @@ Initial release of the Open Cut Format specification.
 - `workspaces` array with full nesting, operations, constraints, and optional toolpaths
 
 **Geometry model**
-- Segment types: `LINE`, `ARC`, `CIRCLE`, `SPLINE` (Bézier + NURBS), `POLYLINE`
+- Contours encoded as standard SVG path data strings (`d` field)
+- Supported SVG commands: `M` (Move), `L` (Line), `H`/`V` (Horizontal/Vertical), `A` (Arc), `C`/`S` (Cubic Bézier), `Q`/`T` (Quadratic Bézier), `Z` (Close)
 - Contour roles: `OUTER`, `INNER`, `OPEN`
 - Right-handed 2D coordinate system, origin at bottom-left, units in mm, angles in degrees
+- Winding convention: CCW for OUTER (recommended), CW for INNER (recommended)
 
 **Materials**
 - Material types: `STEEL`, `STAINLESS_STEEL`, `ALUMINUM`, `COPPER`, `BRASS`, `TITANIUM`, `NICKEL_ALLOY`, `PLASTIC`, `FOAM`, `WOOD`, `STONE`, `COMPOSITE`, `OTHER`

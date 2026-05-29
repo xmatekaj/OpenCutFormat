@@ -29,231 +29,48 @@
         "id": "part_cover_plate",
         "name": "Cover Plate 400×300 20mm",
         "description": "Heavy cover plate. Outer contour is plasma-bevelled for weld prep. Four through-holes are straight plasma cut.",
-        "tags": [
-          "cover",
-          "heavy-plate",
-          "weld-prep"
-        ],
+        "tags": ["cover", "heavy-plate", "weld-prep"],
         "compatible_thickness_min_mm": 15.0,
         "compatible_thickness_max_mm": 30.0,
         "geometry": {
           "bounding_box": {
-            "min": [
-              0,
-              0
-            ],
-            "max": [
-              400,
-              300
-            ]
+            "min": [0, 0],
+            "max": [400, 300]
           },
           "contours": [
             {
               "id": "contour_outer",
               "role": "OUTER",
               "winding": "CCW",
-              "segments": [
-                {
-                  "id": "seg_bot",
-                  "type": "LINE",
-                  "start": [
-                    15,
-                    0
-                  ],
-                  "end": [
-                    385,
-                    0
-                  ]
-                },
-                {
-                  "id": "seg_br",
-                  "type": "ARC",
-                  "start": [
-                    385,
-                    0
-                  ],
-                  "end": [
-                    400,
-                    15
-                  ],
-                  "center": [
-                    385,
-                    15
-                  ],
-                  "radius": 15,
-                  "clockwise": false
-                },
-                {
-                  "id": "seg_right",
-                  "type": "LINE",
-                  "start": [
-                    400,
-                    15
-                  ],
-                  "end": [
-                    400,
-                    285
-                  ]
-                },
-                {
-                  "id": "seg_tr",
-                  "type": "ARC",
-                  "start": [
-                    400,
-                    285
-                  ],
-                  "end": [
-                    385,
-                    300
-                  ],
-                  "center": [
-                    385,
-                    285
-                  ],
-                  "radius": 15,
-                  "clockwise": false
-                },
-                {
-                  "id": "seg_top",
-                  "type": "LINE",
-                  "start": [
-                    385,
-                    300
-                  ],
-                  "end": [
-                    15,
-                    300
-                  ]
-                },
-                {
-                  "id": "seg_tl",
-                  "type": "ARC",
-                  "start": [
-                    15,
-                    300
-                  ],
-                  "end": [
-                    0,
-                    285
-                  ],
-                  "center": [
-                    15,
-                    285
-                  ],
-                  "radius": 15,
-                  "clockwise": false
-                },
-                {
-                  "id": "seg_left",
-                  "type": "LINE",
-                  "start": [
-                    0,
-                    285
-                  ],
-                  "end": [
-                    0,
-                    15
-                  ]
-                },
-                {
-                  "id": "seg_bl",
-                  "type": "ARC",
-                  "start": [
-                    0,
-                    15
-                  ],
-                  "end": [
-                    15,
-                    0
-                  ],
-                  "center": [
-                    15,
-                    15
-                  ],
-                  "radius": 15,
-                  "clockwise": false
-                }
-              ]
+              "d": "M 15 0 L 385 0 A 15 15 0 0 0 400 15 L 400 285 A 15 15 0 0 0 385 300 L 15 300 A 15 15 0 0 0 0 285 L 0 15 A 15 15 0 0 0 15 0 Z"
             },
             {
               "id": "hole_1",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "through-hole",
-                "m20-clearance"
-              ],
-              "segments": [
-                {
-                  "id": "sh1",
-                  "type": "CIRCLE",
-                  "center": [
-                    50,
-                    50
-                  ],
-                  "radius": 11
-                }
-              ]
+              "tags": ["through-hole", "m20-clearance"],
+              "d": "M 50 39 A 11 11 0 0 1 50 61 A 11 11 0 0 1 50 39 Z"
             },
             {
               "id": "hole_2",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "through-hole",
-                "m20-clearance"
-              ],
-              "segments": [
-                {
-                  "id": "sh2",
-                  "type": "CIRCLE",
-                  "center": [
-                    350,
-                    50
-                  ],
-                  "radius": 11
-                }
-              ]
+              "tags": ["through-hole", "m20-clearance"],
+              "d": "M 350 39 A 11 11 0 0 1 350 61 A 11 11 0 0 1 350 39 Z"
             },
             {
               "id": "hole_3",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "through-hole",
-                "m20-clearance"
-              ],
-              "segments": [
-                {
-                  "id": "sh3",
-                  "type": "CIRCLE",
-                  "center": [
-                    350,
-                    250
-                  ],
-                  "radius": 11
-                }
-              ]
+              "tags": ["through-hole", "m20-clearance"],
+              "d": "M 350 239 A 11 11 0 0 1 350 261 A 11 11 0 0 1 350 239 Z"
             },
             {
               "id": "hole_4",
               "role": "INNER",
               "winding": "CW",
-              "tags": [
-                "through-hole",
-                "m20-clearance"
-              ],
-              "segments": [
-                {
-                  "id": "sh4",
-                  "type": "CIRCLE",
-                  "center": [
-                    50,
-                    250
-                  ],
-                  "radius": 11
-                }
-              ]
+              "tags": ["through-hole", "m20-clearance"],
+              "d": "M 50 239 A 11 11 0 0 1 50 261 A 11 11 0 0 1 50 239 Z"
             }
           ],
           "source_format": "DXF"
@@ -355,11 +172,7 @@
         "type": "PLASMA",
         "manufacturer": "Generic",
         "post_processor": "generic_plasma_bevel_v1",
-        "capabilities": [
-          "PLASMA_CUT",
-          "BEVEL_CUT",
-          "MARKING"
-        ],
+        "capabilities": ["PLASMA_CUT", "BEVEL_CUT", "MARKING"],
         "bed_width_mm": 2500,
         "bed_height_mm": 1250
       },

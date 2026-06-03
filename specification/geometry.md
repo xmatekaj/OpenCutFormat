@@ -37,7 +37,7 @@ OCF uses **Cartesian coordinates (Y positive upward)**, which is standard in CNC
    - SVG sweep-flag=0 (counterclockwise in SVG space) → OCF sweep-flag=1 (clockwise in Cartesian space)
 3. **Verify orientation** by checking if contour winding (expected CCW for OUTER) matches actual geometry direction
 
-**Example:** SVG arc `A 50 50 0 0 1 150 50` (sweep-flag=1, CW in SVG) → OCF arc `A 50 50 0 0 0 y' 50` (sweep-flag=0, CW in Cartesian after Y inversion)
+**Example:** SVG arc `A 50 50 0 0 1 150 50` (sweep-flag=1, CW in screen/Y-down space) → OCF arc `A 50 50 0 0 0 150 -50` (sweep-flag=0, which is **CCW** in Cartesian Y-up per §3.1). Negating Y mirrors the plane, so the same physical curvature reverses rotational sense and the flag flips 1→0.
 
 ### 1.1 Library Space vs Sheet Space
 
